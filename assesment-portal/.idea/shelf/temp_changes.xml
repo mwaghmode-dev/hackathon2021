@@ -1,0 +1,9 @@
+<changelist name="temp_changes" date="1624115287546" recycled="false">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/temp_changes/shelved.patch" />
+  <option name="DESCRIPTION" value="temp changes" />
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/com/assesmentportal/AssesmentPortalApplication.class" />
+    <option name="AFTER_PATH" value="target/classes/com/assesmentportal/AssesmentPortalApplication.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/temp_changes/AssesmentPortalApplication.class" />
+  </binary>
+</changelist>

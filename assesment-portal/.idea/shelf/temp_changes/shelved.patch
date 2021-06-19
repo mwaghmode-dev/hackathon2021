@@ -1,0 +1,198 @@
+Index: src/main/resources/application.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>spring.data.mongodb.host=localhost\nspring.data.mongodb.port=27017\nspring.data.mongodb.database=assesmentPortal\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/resources/application.properties b/src/main/resources/application.properties
+--- a/src/main/resources/application.properties	(revision 225d53cbf1236fd3613bc956ae264612b531502f)
++++ b/src/main/resources/application.properties	(date 1624020020604)
+@@ -1,3 +1,4 @@
+ spring.data.mongodb.host=localhost
+ spring.data.mongodb.port=27017
+ spring.data.mongodb.database=assesmentPortal
++management.security.enabled=false
+Index: src/main/java/com/assesmentportal/AssesmentPortalApplication.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.assesmentportal;\n\nimport org.springframework.boot.SpringApplication;\nimport org.springframework.boot.autoconfigure.SpringBootApplication;\n\n@SpringBootApplication\npublic class AssesmentPortalApplication {\n\tpublic static void main(String[] args) {\n\t\tSpringApplication.run(AssesmentPortalApplication.class, args);\n\t}\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/assesmentportal/AssesmentPortalApplication.java b/src/main/java/com/assesmentportal/AssesmentPortalApplication.java
+--- a/src/main/java/com/assesmentportal/AssesmentPortalApplication.java	(revision 225d53cbf1236fd3613bc956ae264612b531502f)
++++ b/src/main/java/com/assesmentportal/AssesmentPortalApplication.java	(date 1624022568531)
+@@ -2,8 +2,9 @@
+ 
+ import org.springframework.boot.SpringApplication;
+ import org.springframework.boot.autoconfigure.SpringBootApplication;
++import org.springframework.boot.autoconfigure.security.SecurityAutoConfiguration;
+ 
+-@SpringBootApplication
++@SpringBootApplication(exclude = {SecurityAutoConfiguration.class })
+ public class AssesmentPortalApplication {
+ 	public static void main(String[] args) {
+ 		SpringApplication.run(AssesmentPortalApplication.class, args);
+Index: pom.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\"\n\t\t\t\t xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n\t\t\t\t xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\">\n\t<modelVersion>4.0.0</modelVersion>\n\t<groupId>com.assesmentportal</groupId>\n\t<artifactId>assesment-portal</artifactId>\n\t<version>1.0-SNAPSHOT</version>\n\n\t<parent>\n\t\t<groupId>org.springframework.boot</groupId>\n\t\t<artifactId>spring-boot-starter-parent</artifactId>\n\t\t<version>1.4.2.RELEASE</version>\n\t</parent>\n\n\t<dependencies>\n\t\t<dependency>\n\t\t\t<groupId>org.springframework.boot</groupId>\n\t\t\t<artifactId>spring-boot-starter-web</artifactId>\n\t\t</dependency>\n\n\t\t<dependency>\n\t\t\t<groupId>org.springframework.boot</groupId>\n\t\t\t<artifactId>spring-boot-starter-data-mongodb</artifactId>\n\t\t</dependency>\n\t\t<dependency>\n\t\t\t<groupId>org.springframework.boot</groupId>\n\t\t\t<artifactId>spring-boot-starter-security</artifactId>\n\t\t\t<version>2.3.11.RELEASE</version>\n\t\t</dependency>\n\t\t<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->\n\t\t<dependency>\n\t\t\t<groupId>org.projectlombok</groupId>\n\t\t\t<artifactId>lombok</artifactId>\n\t\t\t<version>1.18.20</version>\n\t\t\t<scope>provided</scope>\n\t\t</dependency>\n\t\t<!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->\n\t\t<dependency>\n\t\t\t<groupId>org.slf4j</groupId>\n\t\t\t<artifactId>slf4j-api</artifactId>\n\t\t\t<version>1.7.30</version>\n\t\t</dependency>\n\n\t</dependencies>\n\n\n</project>\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/pom.xml b/pom.xml
+--- a/pom.xml	(revision 225d53cbf1236fd3613bc956ae264612b531502f)
++++ b/pom.xml	(date 1624087912471)
+@@ -6,7 +6,18 @@
+ 	<groupId>com.assesmentportal</groupId>
+ 	<artifactId>assesment-portal</artifactId>
+ 	<version>1.0-SNAPSHOT</version>
+-
++	<build>
++		<plugins>
++			<plugin>
++				<groupId>org.apache.maven.plugins</groupId>
++				<artifactId>maven-compiler-plugin</artifactId>
++				<configuration>
++					<source>8</source>
++					<target>8</target>
++				</configuration>
++			</plugin>
++		</plugins>
++	</build>
+ 	<parent>
+ 		<groupId>org.springframework.boot</groupId>
+ 		<artifactId>spring-boot-starter-parent</artifactId>
+@@ -23,11 +34,11 @@
+ 			<groupId>org.springframework.boot</groupId>
+ 			<artifactId>spring-boot-starter-data-mongodb</artifactId>
+ 		</dependency>
+-		<dependency>
+-			<groupId>org.springframework.boot</groupId>
+-			<artifactId>spring-boot-starter-security</artifactId>
+-			<version>2.3.11.RELEASE</version>
+-		</dependency>
++<!--		<dependency>-->
++<!--			<groupId>org.springframework.boot</groupId>-->
++<!--			<artifactId>spring-boot-starter-security</artifactId>-->
++<!--			<version>2.4.0</version>-->
++<!--		</dependency>-->
+ 		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+ 		<dependency>
+ 			<groupId>org.projectlombok</groupId>
+@@ -41,7 +52,11 @@
+ 			<artifactId>slf4j-api</artifactId>
+ 			<version>1.7.30</version>
+ 		</dependency>
+-
++		<dependency>
++			<groupId>org.springframework.data</groupId>
++			<artifactId>spring-data-mongodb</artifactId>
++			<version>1.9.5.RELEASE</version>
++		</dependency>
+ 	</dependencies>
+ 
+ 
+Index: target/classes/application.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>spring.data.mongodb.host=localhost\nspring.data.mongodb.port=27017\nspring.data.mongodb.database=assesmentPortal\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/target/classes/application.properties b/target/classes/application.properties
+--- a/target/classes/application.properties	(revision 225d53cbf1236fd3613bc956ae264612b531502f)
++++ b/target/classes/application.properties	(date 1624022454250)
+@@ -1,3 +1,4 @@
+ spring.data.mongodb.host=localhost
+ spring.data.mongodb.port=27017
+ spring.data.mongodb.database=assesmentPortal
++management.security.enabled=false
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"ExternalStorageConfigurationManager\" enabled=\"true\" />\n  <component name=\"MavenProjectsManager\">\n    <option name=\"originalFiles\">\n      <list>\n        <option value=\"$PROJECT_DIR$/pom.xml\" />\n      </list>\n    </option>\n  </component>\n  <component name=\"ProjectRootManager\" version=\"2\" languageLevel=\"JDK_1_6\" project-jdk-name=\"1.8 (2)\" project-jdk-type=\"JavaSDK\">\n    <output url=\"file://$PROJECT_DIR$/out\" />\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+--- a/.idea/misc.xml	(revision 225d53cbf1236fd3613bc956ae264612b531502f)
++++ b/.idea/misc.xml	(date 1624087898392)
+@@ -8,7 +8,7 @@
+       </list>
+     </option>
+   </component>
+-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_6" project-jdk-name="1.8 (2)" project-jdk-type="JavaSDK">
++  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="1.8 (2)" project-jdk-type="JavaSDK">
+     <output url="file://$PROJECT_DIR$/out" />
+   </component>
+ </project>
+\ No newline at end of file
+Index: .idea/jarRepositories.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/jarRepositories.xml b/.idea/jarRepositories.xml
+new file mode 100644
+--- /dev/null	(date 1624015385674)
++++ b/.idea/jarRepositories.xml	(date 1624015385674)
+@@ -0,0 +1,20 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="RemoteRepositoriesConfiguration">
++    <remote-repository>
++      <option name="id" value="central" />
++      <option name="name" value="Central Repository" />
++      <option name="url" value="https://repo.maven.apache.org/maven2" />
++    </remote-repository>
++    <remote-repository>
++      <option name="id" value="central" />
++      <option name="name" value="Maven Central repository" />
++      <option name="url" value="https://repo1.maven.org/maven2" />
++    </remote-repository>
++    <remote-repository>
++      <option name="id" value="jboss.community" />
++      <option name="name" value="JBoss Community repository" />
++      <option name="url" value="https://repository.jboss.org/nexus/content/repositories/public/" />
++    </remote-repository>
++  </component>
++</project>
+\ No newline at end of file
+Index: .idea/encodings.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"Encoding\">\n    <file url=\"file://$PROJECT_DIR$\" charset=\"UTF-8\" />\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/encodings.xml b/.idea/encodings.xml
+--- a/.idea/encodings.xml	(revision 225d53cbf1236fd3613bc956ae264612b531502f)
++++ b/.idea/encodings.xml	(date 1624015688745)
+@@ -2,5 +2,6 @@
+ <project version="4">
+   <component name="Encoding">
+     <file url="file://$PROJECT_DIR$" charset="UTF-8" />
++    <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
+   </component>
+ </project>
+\ No newline at end of file
+Index: .idea/compiler.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"CompilerConfiguration\">\n    <excludeFromCompile>\n      <directory url=\"file://$USER_HOME$/appdirect/appdirect-parent/appdirect/src/main/groovy\" includeSubdirectories=\"true\" />\n    </excludeFromCompile>\n    <wildcardResourcePatterns>\n      <entry name=\"!?*.java\" />\n      <entry name=\"!?*.form\" />\n      <entry name=\"!?*.class\" />\n      <entry name=\"!?*.groovy\" />\n      <entry name=\"!?*.scala\" />\n      <entry name=\"!?*.flex\" />\n      <entry name=\"!?*.kt\" />\n      <entry name=\"!?*.clj\" />\n    </wildcardResourcePatterns>\n    <annotationProcessing>\n      <profile name=\"Maven default annotation processors profile\" enabled=\"true\">\n        <sourceOutputDir name=\"target/generated-sources/annotations\" />\n        <sourceTestOutputDir name=\"target/generated-test-sources/test-annotations\" />\n        <outputRelativeToContentRoot value=\"true\" />\n        <module name=\"assesment-portal\" />\n      </profile>\n    </annotationProcessing>\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/compiler.xml b/.idea/compiler.xml
+--- a/.idea/compiler.xml	(revision 225d53cbf1236fd3613bc956ae264612b531502f)
++++ b/.idea/compiler.xml	(date 1624016250268)
+@@ -15,6 +15,7 @@
+       <entry name="!?*.clj" />
+     </wildcardResourcePatterns>
+     <annotationProcessing>
++      <profile default="true" name="Default" enabled="true" />
+       <profile name="Maven default annotation processors profile" enabled="true">
+         <sourceOutputDir name="target/generated-sources/annotations" />
+         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
